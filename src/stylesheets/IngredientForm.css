@@ -1,0 +1,22 @@
+.ingredients-group{
+    background-color: lightpink;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ingredient-form{
+    background-color: lightblue;
+    padding: 12px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5px;
+    max-width: 600px;
+}
+
+.measurement-input, .qty-input, .name-input{
+    width: 100%;
+}
