@@ -7,19 +7,24 @@ const IngredientForm = (props) => {
     const [name, setName] = useState("");
     const [qty, setQty] = useState("");
     const [measurementId, setMeasurementId] = useState("");
+    const [measurement, setMeasurement] = useState("");
     const [currentIngredients, setCurrentIngredients] = useState([]);
 
     let newIngredients = (currentIngredients || []).map((ingredient) => (
         <>
-            <p key={ingredient.ingredientId}>{ingredient.name} - {ingredient.qty} - {ingredient.measurement}</p>
-            <button className="">Remove</button>
+            <p key={ingredient.ingredientId}>
+                <i>x{ingredient.qty} {ingredient.measurement}:</i> <b>{ingredient.ingredient}</b>
+            </p>
+            <button onClick={() => handleRemoveIngredient(ingredient.ingredientId, false)} className="">Remove</button>
         </>
     ));
 
     let existingIngredients = (props.selectedMealIngredients || []).map((ingredient) => (
         <>
-            <p key={ingredient.ingredientId}>{ingredient.ingredient} - {ingredient.qty}</p>
-            <button className="">Remove</button>
+            <p key={ingredient.ingredientId}>
+                <i>x{ingredient.qty} {ingredient.measurement}:</i> <b>{ingredient.ingredient}</b>
+            </p>
+            <button onClick={() => handleRemoveIngredient(ingredient.ingredientId, true)} className="">Remove</button>
         </>
     ));
 
@@ -34,17 +39,29 @@ const IngredientForm = (props) => {
             mealId: props.mealId,
             name,
             qty,
+            measurement,
             measurementId
         }
         setCurrentIngredients([...currentIngredients, ingredientToAdd]);
         setName("");
         setQty("");
+        setMeasurement("");
         setMeasurementId("");
+    }
+
+    const handleSelectMeasurement = (e) => {
+        e.preventDefault();
+        
+        const selectedMeasurementId = e.target.value;
+
+        setMeasurementId(selectedMeasurementId);
+        const selectedMeasurement = props.measurements.find(m => String(m.measurementId) === selectedMeasurementId);
+        setMeasurement(selectedMeasurement?.measurement || "");
     }
 
     const handleSubmitAllIngredients = async () => {
         if (currentIngredients.length === 0) {
-            alert("Add at least one ingredient before submitting.");
+            navigate("/meals");
             return;
         }
         try{
@@ -54,9 +71,23 @@ const IngredientForm = (props) => {
             props.onSubmitIngredients();
             navigate("/meals");
         }catch (error) {
-            console.error("Error saving meal", error);
+            console.error("Error saving ingredient", error);
             alert("Failed to save ingredient. Check console for details.");
         }
+    };
+
+    const handleRemoveIngredient = async (ingredientId, isExisting) => {
+        if (isExisting){
+            try{
+                await dataSource.delete(`/mealIngredients/${props.mealId}/${ingredientId}`);
+                props.onSubmitIngredients();
+            }catch (error) {
+                console.error("Error removing ingredient", error);
+                alert("Failed to remove ingredient. Check console for details.");
+            }
+        } else {
+            setCurrentIngredients(previousState => previousState.filter(ingredient => ingredient.ingredientId !== ingredientId));
+        };
     };
     
     return(
@@ -94,7 +125,7 @@ const IngredientForm = (props) => {
                     id="measurementId"
                     className="measurement-input"
                     value={measurementId}
-                    onChange={(e) => setMeasurementId(e.target.value)}
+                    onChange={handleSelectMeasurement}
                     required
                 >
                     <option value="" disabled>Select a measurement</option>
@@ -113,7 +144,8 @@ const IngredientForm = (props) => {
         </div>
         {existingIngredients}
         {newIngredients}
-        <button className="btn btn-secondary" onClick={handleSubmitAllIngredients}>Add Ingredients</button>
+        <button className="btn btn-primary" onClick={handleSubmitAllIngredients}>Update Ingredients</button>
+        <button className="btn btn-secondary" onClick={() => {navigate("/meals")}}>Cancel</button>
         </>
     );
     /*

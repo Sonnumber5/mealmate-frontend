@@ -1,12 +1,13 @@
 import React from "react";
 import './stylesheets/HomeScreen.css';
 import { Link } from "react-router-dom";
+import MealPlanList from "./MealPlanList";
 
 const HomeScreen = (props) => {
     return (
         <div className="main-home-content">
             <div className="left-side">
-                
+                <MealPlanList/>
             </div>
             <div className="right-side">
                 <Link to='/meals'>
