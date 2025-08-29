@@ -11,6 +11,7 @@ function App() {
   const [mealList, setMealList] = useState([]);
   const [categories, setCategories] = useState([]);
   const [mealLoading, setMealLoading] = useState(true);
+  const [mealPlanList, setMealPlanList] = useState([]);
   const [ingredientsLoading, setIngredientsLoading] = useState(true);
   const [selectedMealIngredientsLoading, setSelectedMealIngredientsLoading] = useState(true);
   const [measurementsLoading, setMeasurementsLoading] = useState(true);
@@ -20,6 +21,8 @@ function App() {
   const [ingredientsList, setIngredientsList] = useState([]);
   const [measurements, setMeasurements] = useState([]);
   const [selectedMealIngredients, setSelectedMealIngredients] = useState([]);
+  const [selectedMealPlanDay, setSelectedMealPlanDay] = useState("");
+  const [mealPlanListLoading, setMealPlanListLoading] = useState(true);
 
   // Load all meals
   const loadMeals = async () => {
@@ -37,7 +40,7 @@ function App() {
   const loadIngredients = async () => {
     try{
       const response = await dataSource.get("/ingredients");
-      setIngredientsList(response);
+      setIngredientsList(response.data);
       setIngredientsLoading(false);
     } catch(error){
       console.error("Error fetching ingredients", error);
@@ -131,11 +134,52 @@ function App() {
     navigate("/meals/ingredients/manage");
   };
 
+  const deleteSelectedMealPlanMeal = async (mealPlanId) => {
+      try{
+          await dataSource.delete(`/mealPlans/${mealPlanId}`);
+          loadMealPlans();
+      }catch(error){
+          console.error("Error deleting meal plan", error);
+      }
+  }
+
+  const createMealPlanMeal = async (mealId, day) => {
+      try{
+        await dataSource.post("/mealPlans", {
+          mealId: mealId,
+          day: day
+          });
+          loadMealPlans();
+      } catch(error){
+          console.error("Error creating meal plan", error);
+      }
+  }
+
+  const loadMealPlans = async () => {
+      try {
+          const response = await dataSource.get("/mealPlans");
+          setMealPlanList(response.data);
+          setMealPlanListLoading(false);
+      } catch (err) {
+          console.error("Error fetching meal plans", err);
+          setMealPlanListLoading(false);
+      }
+  }
+
+  const onAddMealPlan = (day) => {
+    setSelectedMealPlanDay(day);
+  } 
+
+  const onAllMealsClick = () => {
+    setSelectedMealPlanDay("");
+  }
+
   useEffect(() => {
     loadCategories();
     loadMeals();
     loadIngredients();
     loadMeasurements();
+    loadMealPlans();
   }, []);
 
   useEffect(() => {
@@ -146,7 +190,14 @@ function App() {
     <BrowserRouter>
       <NavBar />
       <Routes>
-        <Route path="/" element={<HomeScreen />} />
+        <Route path="/"
+        element={<HomeScreen 
+          mealPlanList={mealPlanList} 
+          onAddMealPlan={onAddMealPlan} 
+          deleteSelectedMealPlanMeal={deleteSelectedMealPlanMeal} 
+          mealPlanListLoading={mealPlanListLoading} 
+          onAllMealsClick={onAllMealsClick}
+          changeSelectedMealId={changeSelectedMealId}/>} />
         <Route
           path="/meals"
           element={
@@ -159,6 +210,8 @@ function App() {
               changeSelectedMealId={changeSelectedMealId}
               onCategoryChange={filterMealsByCategory}
               onSearch={searchMeals}
+              addMealToMealPlan={createMealPlanMeal}
+              selectedMealPlanDay={selectedMealPlanDay}
             />
           }
         />

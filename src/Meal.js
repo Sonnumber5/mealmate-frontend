@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 const Meal = (props) => {
+    const [confirmDeleteMealPlan, setConfirmDeleteMealPlan] = useState(false);
 
     const ingredients = (props.meal.mealIngredients || []).map((mealIngredient) => {
         return (
@@ -24,6 +25,56 @@ const Meal = (props) => {
     const handleSelectedMealId = () => {
         props.changeSelectedMealId(props.meal.mealId, navigate);
     }
+
+    const handleDeleteSelectedMealPlanMeal = () => {
+        props.deleteSelectedMealPlanMeal(props.mealPlanId);
+    }
+
+    const handleConfirmDeleteMealPlan = () => {
+        setConfirmDeleteMealPlan(true);
+    }
+
+    const handleCancelDeleteMealPlan = () => {
+        setConfirmDeleteMealPlan(false);
+    }
+
+    const handleAddMealToMealPlan = () => {
+        props.addMealToMealPlan(props.meal.mealId, props.selectedMealPlanDay);
+        navigate("/");
+    }
+
+    const populateMealButtons = () => {
+        if (props.mealOption === "meal" && props.selectedMealPlanDay === ""){
+            return (
+                <>
+                    <button type="button" className="detail-button" onClick={handleSelectedMealId}>Manage Ingredients</button>
+                    <button type="button" className="detail-button edit-btn" onClick={handleSelectedMeal}>Edit</button>
+                </>
+            )
+        } else if (props.mealOption === "mealPlan"){
+            if (confirmDeleteMealPlan){
+                return (
+                    <>
+                        <button type="button" className="detail-button" onClick={handleDeleteSelectedMealPlanMeal}>Confirm</button>
+                        <button type="button" className="detail-button" onClick={handleCancelDeleteMealPlan}>Cancel</button>
+                    </>
+                )
+            } else{
+                return (
+                    <>
+                        <button type="button" className="detail-button" onClick={handleConfirmDeleteMealPlan}>Remove from {props.day}</button>
+                    </>
+                )
+            }
+        } else if (props.selectedMealPlanDay !== ""){
+            return (
+                <>
+                    <button type="button" className="detail-button" onClick={handleSelectedMealId}>Manage Ingredients</button>
+                    <button type="button" className="detail-button" onClick={handleAddMealToMealPlan}>Add</button>
+                </>
+            )
+        }
+    }
     
 
     return (
@@ -35,8 +86,7 @@ const Meal = (props) => {
                     </p>
                 </div >
                 <div className="section-2">
-                    <button type="button" className="detail-button" onClick={handleSelectedMealId}>Manage Ingredients</button>
-                    <button type="button" className="detail-button edit-btn" onClick={handleSelectedMeal}>Edit</button>
+                    {populateMealButtons()}
                 </div>
                 <div className="section-3">
                     <p>{props.meal.description}</p>

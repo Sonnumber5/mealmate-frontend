@@ -1,17 +1,42 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import './stylesheets/HomeScreen.css';
 import { Link } from "react-router-dom";
 import MealPlanList from "./MealPlanList";
+import dataSource from "./DataSource";
 
 const HomeScreen = (props) => {
+
+    const mealPlansElement = () => {
+        if (props.mealPlanListLoading){
+            return (
+                <p>Loading...</p>
+            );
+        } else{
+            return (
+                <MealPlanList 
+                mealPlanList={props.mealPlanList} 
+                addMealToMealPlan={props.addMealToMealPlan}
+                deleteSelectedMealPlanMeal={props.deleteSelectedMealPlanMeal}
+                onAddMealPlan={props.onAddMealPlan}
+                changeSelectedMealId={props.changeSelectedMealId}
+                />
+            );
+        }
+    }
+
+    const onAllMealsClick = () => {
+        props.onAllMealsClick();
+    }
+
+
     return (
         <div className="main-home-content">
             <div className="left-side">
-                <MealPlanList/>
+                {mealPlansElement()}
             </div>
             <div className="right-side">
                 <Link to='/meals'>
-                    <button className="view-meals-btn">All Meals</button>
+                    <button onClick={onAllMealsClick} className="view-meals-btn">All Meals</button>
                 </Link>
                 <div className="grocery-list-container">
                     <div className="grocery-list-menu">

@@ -11,6 +11,9 @@ const MealList = (props) => {
       meal={meal} 
       changeSelectedMeal={props.changeSelectedMeal}
       changeSelectedMealId={props.changeSelectedMealId}
+      mealOption={"meal"}
+      addMealToMealPlan={props.addMealToMealPlan}
+      selectedMealPlanDay={props.selectedMealPlanDay}
     />
   ));
 

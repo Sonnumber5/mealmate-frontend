@@ -1,6 +1,5 @@
-.main-content{
+.main-content-meal-search{
     padding: 15px;
-    position: absolute;
 }
 
 
@@ -51,7 +50,7 @@
     padding: 5px;
 }
 
-.top-section {
+.search-filters-section {
     display: flex;
     align-items: center;
     justify-content: space-between;

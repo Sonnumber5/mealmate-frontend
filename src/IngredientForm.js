@@ -11,21 +11,21 @@ const IngredientForm = (props) => {
     const [currentIngredients, setCurrentIngredients] = useState([]);
 
     let newIngredients = (currentIngredients || []).map((ingredient) => (
-        <>
-            <p key={ingredient.ingredientId}>
-                <i>x{ingredient.qty} {ingredient.measurement}:</i> <b>{ingredient.ingredient}</b>
+        <div key={ingredient.ingredientId}>
+            <p>
+                <i>x{ingredient.qty} {ingredient.measurement}:</i> <b>{ingredient.name}</b>
             </p>
             <button onClick={() => handleRemoveIngredient(ingredient.ingredientId, false)} className="">Remove</button>
-        </>
+        </div>
     ));
 
     let existingIngredients = (props.selectedMealIngredients || []).map((ingredient) => (
-        <>
-            <p key={ingredient.ingredientId}>
+        <div key={ingredient.ingredientId}>
+            <p>
                 <i>x{ingredient.qty} {ingredient.measurement}:</i> <b>{ingredient.ingredient}</b>
             </p>
             <button onClick={() => handleRemoveIngredient(ingredient.ingredientId, true)} className="">Remove</button>
-        </>
+        </div>
     ));
 
     let navigate = useNavigate();

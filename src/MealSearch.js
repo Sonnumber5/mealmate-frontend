@@ -20,8 +20,8 @@ const MealSearch = (props) => {
   if (props.mealLoading) return <p>Loading...</p>;
 
   return (
-    <div className="main-content">
-      <div className="top-section">
+    <div className="main-content-meal-search">
+      <div className="search-filters-section">
         <form className="filters-section" onSubmit={handleSearch}>
           <input
             className="search-bar"
@@ -51,6 +51,8 @@ const MealSearch = (props) => {
         mealList={props.mealList}
         changeSelectedMeal={props.changeSelectedMeal}
         changeSelectedMealId={props.changeSelectedMealId}
+        addMealToMealPlan={props.addMealToMealPlan}
+        selectedMealPlanDay={props.selectedMealPlanDay}
       />
     </div>
   );
