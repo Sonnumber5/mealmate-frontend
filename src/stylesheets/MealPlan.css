@@ -1,10 +1,30 @@
 .dropdown-container{
-    background-color: lightblue;
     display: flex;
+    gap: 15px;
     flex-direction: column;
 }
 
 .dropdown-btn{
+    border-radius: 8px;
+    padding: 10px 0 10px 0;
+    background-color: rgb(122, 197, 220);
+    color: white;
+    border: solid 0.5px rgb(193, 193, 193);
+    
+}
 
+.day-btn{
+    border-radius: 8px;
+    padding: 6px 14px 6px 14px;
+    font-size: 15px;
+    margin-right: auto;
+    border: none;
+    background-color: rgb(122, 197, 220);
+    color: white;
+}
+
+.meal-plan-container{
+    display: grid;
+    gap: 4px;
 }
 

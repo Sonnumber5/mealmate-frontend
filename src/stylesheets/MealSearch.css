@@ -2,12 +2,15 @@
     padding: 15px;
 }
 
-
 .filter-options{
     display: flex;
     gap: 10px;
     margin-left: 10px;
     margin-right: 10px;
+}
+
+.form-select{
+    min-width: 175px;
 }
 
 .add-meal-button{
@@ -27,7 +30,9 @@
     padding: 5px;
     border-radius: 8px;
     box-shadow: 1px 1px 7px rgba(0, 0, 0, 0.166);
-    display: flex;
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    justify-content: space-between;
     align-items: center;
     gap: 10px;
     width: 600px;
@@ -55,4 +60,11 @@
     align-items: center;
     justify-content: space-between;
     margin-bottom: 25px;
-  }
+    gap: 15px;
+}
+
+@media (max-width: 580px){
+    .filters-section{
+        grid-template-columns: 1fr;
+    }
+}

@@ -10,6 +10,7 @@ const MealPlanList = (props) => {
     return days.map((day) => {
         const plansForDay = (props.mealPlanList || []).filter((plan) => plan.day === day);
         return (
+          <div>
             <MealPlan 
             key={day} 
             day={day} 
@@ -19,6 +20,7 @@ const MealPlanList = (props) => {
             deleteSelectedMealPlanMeal={props.deleteSelectedMealPlanMeal}
             changeSelectedMealId={props.changeSelectedMealId}
             />
+          </div>
         );
     });
   };
@@ -26,7 +28,7 @@ const MealPlanList = (props) => {
 
   return (
     <>
-      <div>
+      <div className="meal-plan-container">
         {mealPlansByDay()}
       </div>
     </>

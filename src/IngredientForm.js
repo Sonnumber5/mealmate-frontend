@@ -66,6 +66,7 @@ const IngredientForm = (props) => {
         }
         try{
             for (let ingredientData of currentIngredients){
+                ingredientData.name = ingredientData.name.toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
                 await dataSource.post("/mealIngredients", ingredientData);
             }
             props.onSubmitIngredients();
@@ -116,6 +117,7 @@ const IngredientForm = (props) => {
                     onChange={(e) => setQty(e.target.value)}
                     min="0"
                     step="0.1"
+                    required
                     />
                 </div>
 

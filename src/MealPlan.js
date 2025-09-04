@@ -39,9 +39,7 @@ export const MealPlan = (props) => {
             <CCard>
             <CCardBody>
                 <div className="dropdown-container">
-                    <button type="button" onClick={onAddBtnClick} className="">Add Meal for {props.day}</button>
-                </div>
-                <div>
+                    <button className="day-btn" type="button" onClick={onAddBtnClick}>Add Meal for {props.day}</button>
                     {currentMealPlans}
                 </div>
             </CCardBody>

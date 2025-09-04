@@ -1,44 +1,62 @@
 .meal-container{
+    container-type: inline-size;
+}
+
+.meal-content {
     display: grid;
     grid-template-columns: 2fr 3fr;
     padding: 12px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.208);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border: solid 0.5px rgb(225, 225, 225);
     border-radius: 8px;
+    gap: 10px;
 }
 
+
 .section-1{
-    margin-bottom: 8px;
     margin-right: 8px;
 }
 
 .section-3{
     padding: 5px;
+    max-height: 70px;
+    overflow: scroll;
     border-radius: 8px;
     background-color: rgb(249, 249, 249);
     margin-right: 12px;
     border: solid 1px rgba(0, 0, 0, 0.09);
+    width: 100%;
+}
+
+.meal-description-element{
+    font-size: 13px;
 }
 
 .section-2{
     display: flex;
     gap: 12px;
     justify-self: end;
-    margin-bottom: 12px;
 }
 
 .section-4{
     padding: 5px;
     border-radius: 8px;
-    box-shadow: inset 1px 1px 7px rgba(0, 0, 0, 0.166);
+    max-height: 70px;
+    overflow: scroll;
+    box-shadow: inset 1px 1px 7px rgba(0, 0, 0, 0.1);
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    justify-content: space-between;
+    border: solid 1px rgba(0, 0, 0, 0.09);
+    gap: 15px;
+}
+
+.ingredients-list-element{
+    white-space: nowrap;
 }
 
 .section-4, .section-3{
     color: rgb(72, 72, 72);
 }
-
 
 .detail-button{
     font-size: 12px;
@@ -48,8 +66,9 @@
     border: none;
     border-radius: 30px;
     background-color: white;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.174);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     transition: background-color 0.25s, color 0.25s, border;
+    white-space: nowrap;
 }
 
 .detail-button:hover{
@@ -65,4 +84,45 @@
 
 .meal-header{
     font-size: 20px;
+}
+
+@container (min-width: 1000px) {
+    .section-4 {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+}
+
+@container (max-width: 810px) {
+    .section-4 {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@container (max-width: 650px) {
+    .meal-content {
+        grid-template-columns: 1fr;
+    }
+    .section-2 {
+        justify-self: start;
+    }
+    .section-4 {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+
+@container (max-width: 520px) {
+    .section-4 {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@container (max-width: 380px) {
+    .section-4 {
+        grid-template-columns: 1fr;
+    }
+    .section-2{
+        flex-direction: column;
+        gap: 8px;
+        justify-self: start;
+    }
 }

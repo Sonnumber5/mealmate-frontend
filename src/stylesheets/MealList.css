@@ -3,4 +3,9 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.075);
+    overflow: scroll;
+    height: 100vh;
 }

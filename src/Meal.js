@@ -5,11 +5,13 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 const Meal = (props) => {
+    //used to display or hide the `confirm delete` button when delete button is pressed
     const [confirmDeleteMealPlan, setConfirmDeleteMealPlan] = useState(false);
 
+    //formats all the ingredients in each meal in a format that is easier to read
     const ingredients = (props.meal.mealIngredients || []).map((mealIngredient) => {
         return (
-            <p key={mealIngredient.ingredientId}>
+            <p className="ingredients-list-element" key={mealIngredient.ingredientId}>
                 <em>x{mealIngredient.qty} {mealIngredient.measurement}: </em>
                 <b>{mealIngredient.ingredient}</b>
             </p>
@@ -18,6 +20,8 @@ const Meal = (props) => {
 
     let navigate = useNavigate();
 
+    //changeSelectedMeal is passed down from App.js to br used here. 
+    //Sets the currently selected meal in the root of the app in order to retrieve the selected Meal's ingredients
     const handleSelectedMeal = () => {
         props.changeSelectedMeal(props.meal, navigate);
     }
@@ -62,6 +66,7 @@ const Meal = (props) => {
             } else{
                 return (
                     <>
+                        <button type="button" className="detail-button" onClick={handleSelectedMealId}>Manage Ingredients</button>
                         <button type="button" className="detail-button" onClick={handleConfirmDeleteMealPlan}>Remove from {props.day}</button>
                     </>
                 )
@@ -79,7 +84,8 @@ const Meal = (props) => {
 
     return (
         <>
-            <div className="meal-container">
+        <div className="meal-container">
+            <div className="meal-content">
                 <div className="section-1">
                     <p className="meal-header">
                         {props.meal.name}
@@ -89,12 +95,14 @@ const Meal = (props) => {
                     {populateMealButtons()}
                 </div>
                 <div className="section-3">
-                    <p>{props.meal.description}</p>
+                    <p className="meal-description-element">{props.meal.description}</p>
                 </div>
                 <div className="section-4">
                     {ingredients}
                 </div>
             </div>
+        </div>
+            
         </>
     );
 };
