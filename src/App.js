@@ -12,13 +12,13 @@ function App() {
   const [categories, setCategories] = useState([]);
   const [mealLoading, setMealLoading] = useState(true);
   const [mealPlanList, setMealPlanList] = useState([]);
-  const [ingredientsLoading, setIngredientsLoading] = useState(true);
+  //const [ingredientsLoading, setIngredientsLoading] = useState(true);
   const [selectedMealIngredientsLoading, setSelectedMealIngredientsLoading] = useState(true);
   const [measurementsLoading, setMeasurementsLoading] = useState(true);
   const [selectedMeal, setSelectedMeal] = useState(null);
   const [selectedMealId, setSelectedMealId] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState("");
-  const [ingredientsList, setIngredientsList] = useState([]);
+  //const [ingredientsList, setIngredientsList] = useState([]);
   const [measurements, setMeasurements] = useState([]);
   const [selectedMealIngredients, setSelectedMealIngredients] = useState([]);
   const [selectedMealPlanDay, setSelectedMealPlanDay] = useState("");
@@ -37,6 +37,7 @@ function App() {
   };
 
   // Load all ingredients
+  /*
   const loadIngredients = async () => {
     try{
       const response = await dataSource.get("/ingredients");
@@ -47,6 +48,7 @@ function App() {
       setIngredientsLoading(false);
     }
   };
+  */
 
   // Load ingredients for the selected meal
   const loadSelectedMealIngredients = async () => {
@@ -118,7 +120,7 @@ function App() {
   };
 
   const onSubmitIngredients = async () => {
-    await loadIngredients();
+    //await loadIngredients();
     await loadMeals();
     await loadSelectedMealIngredients();
   }
@@ -177,7 +179,7 @@ function App() {
   useEffect(() => {
     loadCategories();
     loadMeals();
-    loadIngredients();
+    //loadIngredients();
     loadMeasurements();
     loadMealPlans();
   }, []);

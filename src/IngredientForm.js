@@ -11,11 +11,11 @@ const IngredientForm = (props) => {
     const [currentIngredients, setCurrentIngredients] = useState([]);
 
     let newIngredients = (currentIngredients || []).map((ingredient) => (
-        <div key={ingredient.ingredientId}>
+        <div key={ingredient.name}>
             <p>
                 <i>x{ingredient.qty} {ingredient.measurement}:</i> <b>{ingredient.name}</b>
             </p>
-            <button onClick={() => handleRemoveIngredient(ingredient.ingredientId, false)} className="">Remove</button>
+            <button onClick={() => handleRemoveIngredient(ingredient.name, false)} className="">Remove</button>
         </div>
     ));
 
