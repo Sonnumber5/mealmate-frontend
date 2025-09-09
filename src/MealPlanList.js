@@ -8,20 +8,19 @@ const MealPlanList = (props) => {
 
   const mealPlansByDay = () => {
     return days.map((day) => {
-        const plansForDay = (props.mealPlanList || []).filter((plan) => plan.day === day);
-        return (
-          <div>
-            <MealPlan 
-            key={day} 
+      const plansForDay = (props.mealPlanList || []).filter((plan) => plan.day === day);
+      return (
+        <div key={day}>
+          <MealPlan 
             day={day} 
             plans={plansForDay} 
             onAddMealPlan={props.onAddMealPlan}
             addMealToMealPlan={props.addMealToMealPlan}
             deleteSelectedMealPlanMeal={props.deleteSelectedMealPlanMeal}
             changeSelectedMealId={props.changeSelectedMealId}
-            />
-          </div>
-        );
+          />
+        </div>
+      );
     });
   };
 
